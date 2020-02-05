@@ -8,7 +8,7 @@ Helping people to identify infection risk while there is a pandemic disease.
 ncov软件是全志愿者开发，完全开源、免费的软件，请放心下载使用。
 ### 1.1 下载
 下载链接：https://github.com/ShifaSZ/ContainVirus/blob/master/ncov/app/release/app-release.apk
-（这是适用版，稍后有正式版在各手机应用市场上现，保证正式版和临时版兼任，所以可以放心使用。
+这是试用版，稍后在正式版在各手机应用市场上线。我们保证正式版和试用版兼任，所以可以放心使用。
 
 ### 1.2 安装运行
 安装时要给这个软件打开获取位置，访问网络，和存储权限，并允许后台运行。<br/>
