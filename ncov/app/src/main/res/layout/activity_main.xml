@@ -16,7 +16,8 @@
     <TextView
         android:id="@+id/latidude"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" />
 
     <Button
         android:id="@+id/inspectButon"
@@ -28,7 +29,7 @@
     <TextView
         android:id="@+id/records"
         android:layout_width="match_parent"
-        android:layout_height="442dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -26,6 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -35,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView locationText, recordsText;
     private Button inspectButton;
     private long seqNum = 0;
-    private int lastLine=0;
+    private long timestemp=0;
+    //private int lastLine=0;
 
     private  File file;
 
@@ -53,7 +55,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         Date currentTime = Calendar.getInstance().getTime();
-        locationText.setText("#"+seqNum+"\nTime:"+currentTime+"\nLatitude:0\nLongitude:0\nRadius:0");
+        String text = "足迹保存分析器\n抗击新冠病毒！武汉加油！湖北加油！中国加油！\n"+
+                "开源代码：https://github.com/ShifaSZ/ContainVirus\n"+
+                "提示：连续后台运行15天即可解锁病毒感染风险分析功能";
+        locationText.setText(text);
         file = initFile();
         locationService = new LocationService(getApplicationContext());
         locationService.registerListener(myListener);
@@ -83,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showData(){
+        final int count = 16;
+        String records[] = new String[count];
         if (file.exists()) {
             FileInputStream is = null;
             try {
@@ -93,34 +100,28 @@ public class MainActivity extends AppCompatActivity {
             if (null == is)
                 return;
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            for (int i=0; i< lastLine; i++){
+            int readLines = 0;
+            while (true) {
                 try {
                     String line = reader.readLine();
-                } catch (IOException ioe) {
-                    recordsText.setText("Exception while reading file " + ioe);
-                    break;
-                }
-            }
-            int readLines;
-            String output="";
-            for (readLines=0; readLines<20; readLines++){
-                String line="";
-                try {
-                    line = reader.readLine();
+                    if (null == line)
+                        break;
+                    records[readLines] = line;
+                    readLines = (readLines+1)%count;
                 } catch (IOException ioe) {
                     //recordsText.setText("Exception while reading file " + ioe);
                     break;
                 }
-                if (null == line)
-                    break;
-                output = output+line+"\n";
             }
-            lastLine += readLines;
+            String output="";
+            for (int i=0; i<count; i++){
+                output = output + "     " + records[(readLines+i)%count] + "\n";
+            }
             recordsText.setText(output);
             try{
                 reader.close();
             } catch (IOException ioe) {
-                recordsText.setText("Exception while closing file " + ioe);
+                locationText.setText("Exception while closing file " + ioe);
             }
         }
     }
@@ -174,11 +175,15 @@ public class MainActivity extends AppCompatActivity {
             double latitude = location.getLatitude();    //获取纬度信息
             double longitude = location.getLongitude();    //获取经度信息
             float radius = location.getRadius();    //获取定位精度，默认值为0.0f
-            Date currentTime = Calendar.getInstance().getTime();
+            Date date = new Date();
+            long ts = date.getTime();
+            if (ts-timestemp < 60*1000)
+                return;
+            timestemp = ts;
             seqNum++;
-            locationText.setText("#"+seqNum+"\nTime:"+currentTime + "\nLatitude: " + latitude+"\nLongitude:"+
-                    longitude+"\nRadius:"+radius);
-            String position = seqNum+","+currentTime+","+latitude+","+longitude+","+radius+"\n";
+            //locationText.setText("#"+seqNum+"\nTime:"+currentTime + "\nLatitude: " + latitude+"\nLongitude:"+
+            //        longitude+"\nRadius:"+radius);
+            String position = "" + seqNum + "," + ts + "," + latitude + "," + longitude + "," + radius + "\n";
             appendFile(position);
         }
     }
