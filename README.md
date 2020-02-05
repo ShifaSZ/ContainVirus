@@ -22,3 +22,7 @@ ncov软件是全志愿者开发，完全开源、免费的软件，请放心下�
 ## 2. Use the source code
 If you like to use the source code to embed it into your software, what you need to do is to copy the libs under ncov/app/libs and ncov/app/src/main/java/com/baidu/* into your project and use the code in ncov/app/src/main/java/com/contain/ncov/MainActivity.java as a reference to write your own codes. <br/><br/>
 It uses the Baidu map API SDK. The SDK needs a Application Key (AK). You have to apply one one the Baidu website following the instructions in http://lbsyun.baidu.com/index.php?title=android-locsdk/guide/create-project/key. Then, you can following the guides in http://lbsyun.baidu.com/index.php?title=android-locsdk/guide/create-project/android-studio or http://lbsyun.baidu.com/index.php?title=android-locsdk/guide/create-project/eclipse to configure your project.
+
+## 问题反馈
+欢迎直接在github issues上反馈遇到的问题，链接是：https://github.com/ShifaSZ/ContainVirus/issues
+<br/>欢迎各种建议。
